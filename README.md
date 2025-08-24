@@ -4,14 +4,14 @@ Allocation calculator for participating in launches with BioXP loyalty points on
 
 ## ✨ Features
 
-- **Dynamic Calculation**: Adjust total pledge amount between 50M-300M range
+- **Dynamic Calculation**: Adjust total pledge amount between 50M-500M range
 - **Real-time Results**: Get your allocation instantly by entering your BioXP points
 - **Detailed Analysis**: Normal calculation, maximum limit and potential return information
 - **Responsive Design**: Perfect appearance on mobile and desktop devices
 
 ## 🚀 Usage
 
-1. **Select Total Pledge Amount**: Use slider to adjust between 50M-300M range (default: 150M)
+1. **Select Total Pledge Amount**: Use slider to adjust between 50M-500M range (default: 150M)
 2. **Enter Your BioXP Points**: Type your BioXP points
 3. **Calculate**: See results instantly
 
