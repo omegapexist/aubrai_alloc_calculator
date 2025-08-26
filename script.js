@@ -6,11 +6,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const calculateBtn = document.getElementById('calculateBtn');
     const resultsSection = document.getElementById('resultsSection');
     
-    // Constants
-    const TOKENS_FOR_SALE = 77000; // $77k
+    // Constants - Dinamik hesaplanacak
+    let TOKENS_FOR_SALE = 46800; // $0.2 BIO fiyatına göre
+    let INITIAL_FDV = 234000; // $0.2 BIO fiyatına göre
     const MAX_ALLOCATION_PERCENT = 0.005; // 0.5%
-    const INITIAL_FDV = 385000; // $385k
     const POTENTIAL_FDVS = [20000000, 5000000, 10000000, 50000000, 100000000]; // $20M, $5M, $10M, $50M, $100M
+    
+    // BIO fiyatını canlı olarak çek
+    async function fetchBioPrice() {
+        try {
+            // CoinGecko API'den BIO fiyatını çek
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bio-protocol&vs_currencies=usd');
+            const data = await response.json();
+            const bioPrice = data['bio-protocol'].usd;
+            
+            // Fiyata göre değerleri güncelle
+            updateValuesByPrice(bioPrice);
+            
+            // Fiyat bilgisini göster
+            document.getElementById('bioPrice').textContent = `$${bioPrice.toFixed(4)}`;
+            
+        } catch (error) {
+            console.error('BIO fiyatı çekilemedi:', error);
+            // Varsayılan değerlerle devam et
+            updateValuesByPrice(0.2);
+        }
+    }
+    
+    // Fiyata göre değerleri güncelle
+    function updateValuesByPrice(bioPrice) {
+        // $0.2 = 46800 TOKENS_FOR_SALE, 234000 INITIAL_FDV
+        // Oran: 46800/0.2 = 234000, 234000/0.2 = 1170000
+        const tokenRatio = 234000; // 46800/0.2
+        const fdvRatio = 1170000; // 234000/0.2
+        
+        TOKENS_FOR_SALE = Math.round(tokenRatio * bioPrice);
+        INITIAL_FDV = Math.round(fdvRatio * bioPrice);
+        
+        console.log(`BIO Fiyatı: $${bioPrice}, TOKENS_FOR_SALE: ${TOKENS_FOR_SALE}, INITIAL_FDV: ${INITIAL_FDV}`);
+    }
+    
+    // Sayfa yüklendiğinde BIO fiyatını çek
+    fetchBioPrice();
     
     // Range slider value update
     totalPledgeSlider.addEventListener('input', function() {
@@ -19,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Set initial value
-    totalPledgeValue.textContent = formatNumber(150000000);
+    totalPledgeValue.textContent = formatNumber(300000000);
     
     // Calculate button
     calculateBtn.addEventListener('click', function() {
@@ -46,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Allocation calculation formula
         const normalCalculation = (userBioXP / totalPledge) * TOKENS_FOR_SALE;
-        const maxLimit = MAX_ALLOCATION_PERCENT * INITIAL_FDV; // 0.5% of Total FDV = $1,925
+        const maxLimit = MAX_ALLOCATION_PERCENT * INITIAL_FDV; // 0.5% of Total FDV
         const userAllocation = Math.min(normalCalculation, maxLimit);
         
         // BioXP ratio

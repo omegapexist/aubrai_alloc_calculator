@@ -1,32 +1,52 @@
-# 🧬 $AUBRAI Allocation Calculator
+# $AUBRAI Allocation Calculator
 
-Allocation calculator for participating in launches with BioXP loyalty points on Bio Protocol V2 Launchpad.
+Bio Protocol tabanlı $AUBRAI token dağıtım hesaplayıcısı.
 
-## ✨ Features
+## 🚀 Canlı BIO Fiyat Sistemi
 
-- **Dynamic Calculation**: Adjust total pledge amount between 50M-500M range
-- **Real-time Results**: Get your allocation instantly by entering your BioXP points
-- **Detailed Analysis**: Normal calculation, maximum limit and potential return information
-- **Responsive Design**: Perfect appearance on mobile and desktop devices
+Sistem artık **$BIO token fiyatını canlı olarak** CoinGecko API'den çekiyor ve fiyata göre tüm değerleri dinamik olarak hesaplıyor.
 
-## 🚀 Usage
+### 📊 Dinamik Hesaplama Parametreleri
 
-1. **Select Total Pledge Amount**: Use slider to adjust between 50M-500M range (default: 150M)
-2. **Enter Your BioXP Points**: Type your BioXP points
-3. **Calculate**: See results instantly
+- **$0.2 BIO fiyatında**: 
+  - TOKENS_FOR_SALE = 46,800
+  - INITIAL_FDV = 234,000
+- **Fiyat değiştiğinde**: Değerler otomatik oranlanıyor
 
-## 📊 Calculation Formula
+### 🔄 Canlı Fiyat Entegrasyonu
 
+- **CoinGecko API** ile gerçek zamanlı BIO fiyatı
+- **Sayfa yüklendiğinde** otomatik fiyat güncelleme
+- **Hata durumunda** varsayılan $0.2 ile devam
+- **Header'da canlı fiyat göstergesi**
+
+### 🧮 Oran Hesaplama Formülü
+
+```javascript
+// $0.2 = 46,800 TOKENS_FOR_SALE, 234,000 INITIAL_FDV
+const tokenRatio = 234000; // 46,800/0.2
+const fdvRatio = 1170000;  // 234,000/0.2
+
+TOKENS_FOR_SALE = Math.round(tokenRatio * bioPrice);
+INITIAL_FDV = Math.round(fdvRatio * bioPrice);
 ```
-user_allocation = min(
-   (user_points / total_points_pledged) * tokens_for_sale,
-   0.005 * tokens_for_sale
-)
-```
 
-- **First part**: Normal right based on your points
-- **Second part**: Maximum 0.5% limit
-- **Result**: The smaller of the two values
+### 🎯 Sistem Özellikleri
+
+- **Başlangıç değeri**: 300M BioXP (güncellendi)
+- **Range slider**: 50M - 500M arası
+- **BioXP puanlarına göre** adil dağıtım
+- **Maksimum 0.5% limiti** (whale koruması)
+- **Gerçek zamanlı dolar karşılığı** hesaplama
+- **Potansiyel FDV senaryoları** (5M, 10M, 20M, 50M, 100M)
+
+### 💻 Teknik Özellikler
+
+- **Async/await** ile API çağrısı
+- **Error handling** ile güvenli çalışma
+- **Console logging** ile debug bilgisi
+- **Otomatik yeniden hesaplama**
+- **Responsive tasarım**
 
 ## 🎯 Launch Details
 

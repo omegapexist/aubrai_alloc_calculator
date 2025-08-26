@@ -50,6 +50,25 @@ body {
     opacity: 0.9;
 }
 
+.bio-price-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 25px;
+    font-size: 0.95rem;
+    color: #10b981;
+}
+
+.price-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #10b981;
+}
+
 .calculator-card {
     background: #1e293b;
     border-radius: 16px;
